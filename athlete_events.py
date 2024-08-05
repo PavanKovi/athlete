@@ -1,10 +1,14 @@
 import streamlit as st
 import pandas as pd
+import io
+import requests
 
 # Load the data
 @st.cache
 def load_data():
-    data = pd.read_csv('/mnt/data/athlete_events.csv')
+    url = 'https://drive.google.com/uc?export=download&id=1ePNeKEvPc_l6SWBcvH-MK0Y8eyu3GapR'
+    response = requests.get(url)
+    data = pd.read_csv(io.StringIO(response.content.decode('utf-8')))
     return data
 
 data = load_data()
