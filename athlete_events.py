@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import io
 import requests
+import altair as alt
 
 # Load the data
 @st.cache
@@ -63,15 +64,33 @@ st.header("Additional Analysis")
 
 # Age distribution
 st.subheader("Age Distribution")
-age_hist = filtered_data['Age'].dropna()
-st.hist_chart(age_hist)
+age_hist = alt.Chart(filtered_data.dropna(subset=['Age'])).mark_bar().encode(
+    alt.X("Age:Q", bin=True),
+    y='count()',
+).properties(
+    width=600,
+    height=400
+)
+st.altair_chart(age_hist)
 
 # Height distribution
 st.subheader("Height Distribution")
-height_hist = filtered_data['Height'].dropna()
-st.hist_chart(height_hist)
+height_hist = alt.Chart(filtered_data.dropna(subset=['Height'])).mark_bar().encode(
+    alt.X("Height:Q", bin=True),
+    y='count()',
+).properties(
+    width=600,
+    height=400
+)
+st.altair_chart(height_hist)
 
 # Weight distribution
 st.subheader("Weight Distribution")
-weight_hist = filtered_data['Weight'].dropna()
-st.hist_chart(weight_hist)
+weight_hist = alt.Chart(filtered_data.dropna(subset=['Weight'])).mark_bar().encode(
+    alt.X("Weight:Q", bin=True),
+    y='count()',
+).properties(
+    width=600,
+    height=400
+)
+st.altair_chart(weight_hist)
